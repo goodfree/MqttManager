@@ -1,5 +1,24 @@
 ## MqttManager
 
+### 使用
+
+Gradle
+
+```
+implementation 'andy.github.mqtt:MqttManager:1.0.0'
+```
+
+Maven
+
+```
+<dependency>
+	<groupId>andy.github.mqtt</groupId>
+	<artifactId>MqttManager</artifactId>
+	<version>1.0.0</version>
+	<type>pom</type>
+</dependency>
+```
+
 MQTT的连接/订阅/发布，支持以下功能
 
  *	建立连接
