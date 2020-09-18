@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import andy.github.demo.databinding.ActivityDemoBinding
 import andy.github.mqtt.MqttManager.Companion.instance
 import andy.github.mqtt.external.MqttTopic
 import andy.github.mqtt.internal.MqttConnection
@@ -15,6 +14,7 @@ import andy.github.demo.topic.DeviceTopic
 import andy.github.demo.topic.DoorTopic
 import andy.github.demo.topic.LightTopic
 import andy.github.demo.topic.WindowTopic
+import kotlinx.android.synthetic.main.activity_demo.*
 import java.util.*
 
 /**
@@ -24,7 +24,6 @@ import java.util.*
  * @since 2020-07-07 14:09
  */
 class DemoActivity : AppCompatActivity() {
-    var mBinding: ActivityDemoBinding? = null
     var mConnection: MqttConnection? = null
     var mDeviceTopicList: MutableList<DeviceTopic> = ArrayList()
     var mLightTopic = LightTopic()
@@ -32,8 +31,7 @@ class DemoActivity : AppCompatActivity() {
     var mDoorTopic = DoorTopic()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = ActivityDemoBinding.inflate(layoutInflater)
-        setContentView(mBinding!!.root)
+        setContentView(R.layout.activity_demo)
         initView()
     }
 
@@ -54,14 +52,14 @@ class DemoActivity : AppCompatActivity() {
 
     @SuppressLint("CheckResult")
     private fun initView() {
-        mBinding!!.connectBtn.setOnClickListener { view: View? -> createConnection() }
-        mBinding!!.disconnectBtn.setOnClickListener { view: View? -> disconnection() }
-        mBinding!!.lightOpenBtn.setOnClickListener { view: View? ->
+        connect_btn.setOnClickListener { view: View? -> createConnection() }
+        disconnect_btn.setOnClickListener { view: View? -> disconnection() }
+        light_open_btn.setOnClickListener { view: View? ->
             mLightTopic.message = "open light"
             mConnection!!.publishTopic(mLightTopic,object : OnActionListener<LightTopic>{
                 override fun onSuccess(topic: LightTopic?, message: String?) {
-                    runOnUiThread { mBinding!!.topicTv.text = topic!!.mqttTopic }
-                    runOnUiThread { mBinding!!.messageTv.text = message }
+                    runOnUiThread { topic_tv.text = topic!!.mqttTopic }
+                    runOnUiThread { message_tv.text = message }
                 }
 
                 override fun onFailure(topic: LightTopic?, throwable: Throwable?) {
@@ -69,12 +67,12 @@ class DemoActivity : AppCompatActivity() {
                 }
             })
         }
-        mBinding!!.lightCloseBtn.setOnClickListener { view: View? ->
+        light_close_btn.setOnClickListener { view: View? ->
             mLightTopic.message = "close light"
             mConnection!!.publishTopic(mLightTopic, object : OnActionListener<LightTopic>{
                 override fun onSuccess(topic: LightTopic?, message: String?) {
-                    runOnUiThread { mBinding!!.topicTv.text = topic!!.mqttTopic }
-                    runOnUiThread { mBinding!!.messageTv.text = message }
+                    runOnUiThread { topic_tv.text = topic!!.mqttTopic }
+                    runOnUiThread { message_tv.text = message }
                 }
 
                 override fun onFailure(topic: LightTopic?, throwable: Throwable?) {
@@ -82,12 +80,12 @@ class DemoActivity : AppCompatActivity() {
                 }
             })
         }
-        mBinding!!.windowOpenBtn.setOnClickListener { view: View? ->
+        window_open_btn.setOnClickListener { view: View? ->
             mWindowTopic.message = "open window"
             mConnection!!.publishTopic(mWindowTopic, object : OnActionListener<WindowTopic>{
                 override fun onSuccess(topic: WindowTopic?, message: String?) {
-                    runOnUiThread { mBinding!!.topicTv.text = topic!!.mqttTopic }
-                    runOnUiThread { mBinding!!.messageTv.text = message }
+                    runOnUiThread { topic_tv.text = topic!!.mqttTopic }
+                    runOnUiThread { message_tv.text = message }
                 }
 
                 override fun onFailure(topic: WindowTopic?, throwable: Throwable?) {
@@ -95,12 +93,12 @@ class DemoActivity : AppCompatActivity() {
                 }
             })
         }
-        mBinding!!.windowCloseBtn.setOnClickListener { view: View? ->
+        window_close_btn.setOnClickListener { view: View? ->
             mWindowTopic.message = "close window"
             mConnection!!.publishTopic(mWindowTopic, object : OnActionListener<WindowTopic>{
                 override fun onSuccess(topic: WindowTopic?, message: String?) {
-                    runOnUiThread { mBinding!!.topicTv.text = topic!!.mqttTopic }
-                    runOnUiThread { mBinding!!.messageTv.text = message }
+                    runOnUiThread { topic_tv.text = topic!!.mqttTopic }
+                    runOnUiThread { message_tv.text = message }
                 }
 
                 override fun onFailure(topic: WindowTopic?, throwable: Throwable?) {
@@ -108,12 +106,12 @@ class DemoActivity : AppCompatActivity() {
                 }
             })
         }
-        mBinding!!.doorOpenBtn.setOnClickListener { view: View? ->
+        door_open_btn.setOnClickListener { view: View? ->
             mDoorTopic.message = "open door"
             mConnection!!.publishTopic(mDoorTopic, object : OnActionListener<DoorTopic>{
                 override fun onSuccess(topic: DoorTopic?, message: String?) {
-                    runOnUiThread { mBinding!!.topicTv.text = topic!!.mqttTopic }
-                    runOnUiThread { mBinding!!.messageTv.text = message }
+                    runOnUiThread { topic_tv.text = topic!!.mqttTopic }
+                    runOnUiThread { message_tv.text = message }
                 }
 
                 override fun onFailure(topic: DoorTopic?, throwable: Throwable?) {
@@ -121,12 +119,12 @@ class DemoActivity : AppCompatActivity() {
                 }
             })
         }
-        mBinding!!.doorCloseBtn.setOnClickListener { view: View? ->
+        door_close_btn.setOnClickListener { view: View? ->
             mDoorTopic.message = "close door"
             mConnection!!.publishTopic(mDoorTopic, object : OnActionListener<DoorTopic>{
                 override fun onSuccess(topic: DoorTopic?, message: String?) {
-                    runOnUiThread { mBinding!!.topicTv.text = topic!!.mqttTopic }
-                    runOnUiThread { mBinding!!.messageTv.text = message }
+                    runOnUiThread { topic_tv.text = topic!!.mqttTopic }
+                    runOnUiThread { message_tv.text = message }
                 }
 
                 override fun onFailure(topic: DoorTopic?, throwable: Throwable?) {
@@ -134,14 +132,14 @@ class DemoActivity : AppCompatActivity() {
                 }
             })
         }
-        mBinding!!.onlyOneSubscribeBtn.setOnClickListener { view: View? ->
+        only_one_subscribe_btn.setOnClickListener { view: View? ->
             mDeviceTopicList.clear()
             mDeviceTopicList.add(LightTopic("Light", "light is opened"))
             mDeviceTopicList.add(WindowTopic("Window", "light is opened"))
             mDeviceTopicList.add(DoorTopic("Door", "light is opened"))
             mConnection!!.subscribeTopics(mDeviceTopicList, object : OnActionListener<DeviceTopic> {
                 override fun onSuccess(topic: DeviceTopic?, message: String?) {
-                    runOnUiThread { mBinding!!.stateTv.text = "已连接,已订阅${mDeviceTopicList.size}种主题" }
+                    runOnUiThread { state_tv.text = "已连接,已订阅${mDeviceTopicList.size}种主题" }
                 }
 
                 override fun onFailure(topic: DeviceTopic?, throwable: Throwable?) {
@@ -149,15 +147,15 @@ class DemoActivity : AppCompatActivity() {
                 }
             })
         }
-        mBinding!!.onlyOnePublishBtn.setOnClickListener { view: View? ->
+        only_one_publish_btn.setOnClickListener { view: View? ->
             mDeviceTopicList.clear()
             mDeviceTopicList.add(LightTopic("Light", "light is opened"))
             mDeviceTopicList.add(WindowTopic("Window", "window is opened"))
             mDeviceTopicList.add(DoorTopic("Door", "door is opened"))
             mConnection!!.publishTopics(mDeviceTopicList, object : OnActionListener<DeviceTopic>{
                 override fun onSuccess(topic: DeviceTopic?, message: String?) {
-                    runOnUiThread { mBinding!!.topicTv.text = topic!!.mqttTopic }
-                    runOnUiThread { mBinding!!.messageTv.text = message }
+                    runOnUiThread { topic_tv.text = topic!!.mqttTopic }
+                    runOnUiThread { message_tv.text = message }
                 }
 
                 override fun onFailure(topic: DeviceTopic?, throwable: Throwable?) {
@@ -228,11 +226,11 @@ class DemoActivity : AppCompatActivity() {
         mConnection!!.connect(object : OnActionListener<MqttTopic> {
             override fun onSuccess(topic: MqttTopic?, message: String?) {
                 subscribeTopics()
-                runOnUiThread { mBinding!!.stateTv.text = "已连接,已订阅${mDeviceTopicList.size}种主题" }
+                runOnUiThread { state_tv.text = "已连接,已订阅${mDeviceTopicList.size}种主题" }
             }
 
             override fun onFailure(topic: MqttTopic?, throwable: Throwable?) {
-                runOnUiThread { mBinding!!.stateTv.text = "断开连接" }
+                runOnUiThread { state_tv.text = "断开连接" }
             }
         })
     }
@@ -244,9 +242,9 @@ class DemoActivity : AppCompatActivity() {
         mConnection!!.disconnect()
         mConnection = null
         mDeviceTopicList.clear()
-        mBinding!!.stateTv.text = "断开连接"
-        mBinding!!.topicTv.text = ""
-        mBinding!!.messageTv.text = ""
+        state_tv.text = "断开连接"
+        topic_tv.text = ""
+        message_tv.text = ""
     }
 
     private fun subscribeTopics() {
@@ -255,8 +253,8 @@ class DemoActivity : AppCompatActivity() {
         mDeviceTopicList.add(mDoorTopic)
         mConnection!!.subscribeTopics(mDeviceTopicList, object : OnActionListener<DeviceTopic> {
             override fun onSuccess(topic: DeviceTopic?, message: String?) {
-                runOnUiThread { mBinding!!.topicTv.text = topic!!.mqttTopic }
-                runOnUiThread { mBinding!!.messageTv.text = message }
+                runOnUiThread { topic_tv.text = topic!!.mqttTopic }
+                runOnUiThread { message_tv.text = message }
             }
 
             override fun onFailure(topic: DeviceTopic?, throwable: Throwable?) {}

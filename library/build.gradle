@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.panpf.bintray-publish'
 apply plugin: 'kotlin-android'
 
 android {
@@ -25,6 +26,11 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    lintOptions {
+        abortOnError false
+        checkReleaseBuilds false
+    }
 }
 
 dependencies {
@@ -37,6 +43,27 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
 }
-repositories {
-    mavenCentral()
+
+publish {
+    userOrg = 'goodfree'
+    groupId = 'andy.github.mqtt'
+    artifactId = 'MqttManager'
+    publishVersion = '1.0.0'
+    desc = 'MQTT connection/subscription/publishing'
+    website = 'https://github.com/goodfree/MqttManager'
+}
+
+task javadoc(type: Javadoc) {
+    options{
+        encoding "UTF-8"
+        charSet "UTF-8"
+    }
+}
+
+tasks.withType(Javadoc) {
+    options{
+        encoding "UTF-8"
+        charSet 'UTF-8'
+        links "http://docs.oracle.com/javase/7/docs/api"
+    }
 }
