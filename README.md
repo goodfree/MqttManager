@@ -190,3 +190,8 @@ class LightTopic : DeviceTopic, Subscription, Publishing {
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | <img src="https://github.com/goodfree/MqttManager/blob/master/pictrue/20200917173858.jpg" style="zoom:25%;" /> | <img src="https://github.com/goodfree/MqttManager/blob/master/pictrue//20200917173913.jpg" style="zoom:25%;" /> |
 
+
+#### License
+This plugin is available under the Apache License, Version 2.0.
+
+(c) All rights reserved JFrog
